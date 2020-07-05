@@ -16,7 +16,7 @@ spec:
       containers:
         - name: odoo-operator
           # Replace this with the built image name
-          image: REPLACE_IMAGE
+          image: quay.io/ursais/odoo-operator:v0.0.1
           command:
           - odoo-operator
           imagePullPolicy: Always
