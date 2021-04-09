@@ -23,7 +23,7 @@
       _postgresql_user: "odoo"
       _postgresql_password: "odoo"
       _postgresql_volume_size: "{{ postgresql_volume_size|default('4Gi') }}"
-      _postgresql_image: "{{ postgresql_image | default('ursa/postgresql-13') }}"
+      _postgresql_image: "{{ postgresql_image | default('ursa/postgresql-13.0') }}"
       _postgresql_image_tag: "{{ postgresql_image_tag|default('latest') }}"
 
   - name: Set up Odoo
@@ -34,7 +34,7 @@
       _odoo_name: "{{ odoo_service_name | default( meta.name ) }}"
       _odoo_ssl: "{{ odoo_ssl | default(False) | bool }}"
       _odoo_route: "{{ odoo_route | default('') }}"
-      _odoo_image: "{{ odoo_image | default('ursa/odoo-14') }}"
+      _odoo_image: "{{ odoo_image | default('ursa/odoo-14.0') }}"
       _odoo_image_tag: "{{ odoo_image_tag | default('latest') }}"
       _odoo_volume_size: "{{ odoo_volume_size | default('4Gi') }}"
       _odoo_postgresql_service_name: "postgresql-{{ meta.name }}"
