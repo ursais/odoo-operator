@@ -17,7 +17,7 @@ _odoo_memory_limit: 512Mi
 _odoo_cpu_request: 200m
 _odoo_cpu_limit: 500m
 _odoo_wait_for_init: true
-_odoo_image: ursa/odoo-14
+_odoo_image: ursa/odoo-14.0
 _odoo_image_tag: latest
 
 # Set to a valid route for the cluster to make a nicer route than svc-project.apps. Leave empty for default route
