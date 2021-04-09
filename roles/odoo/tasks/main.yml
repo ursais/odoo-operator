@@ -8,6 +8,7 @@
     - merge
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
+  - ./templates/secret.j2
   - ./templates/service_account.j2
   - ./templates/service.j2
   - ./templates/route.j2
@@ -38,8 +39,7 @@
     - merge
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
-  - ./templates/config_map.j2
-  - ./templates/deployment.j2
+  - ./templates/deployment_config.j2
 
 - name: Wait until application is available
   when:

@@ -1,0 +1,106 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: "{{ _odoo_name }}"
+  annotations:
+    description: Defines how to deploy the application server
+    template.alpha.openshift.io/wait-for-ready: 'true'
+spec:
+  strategy:
+    type: Recreate
+  triggers:
+  - type: ConfigChange
+  replicas: 1
+  minReadySeconds: 120
+  selector:
+    name: "{{ _odoo_name }}"
+    app: "{{ _odoo_name }}"
+    release: "{{ _odoo_name }}"
+  template:
+    metadata:
+      name: "{{ _odoo_name }}"
+      labels:
+        name: "{{ _odoo_name }}"
+        app: "{{ _odoo_name }}"
+        release: "{{ _odoo_name }}"
+    spec:
+      containers:
+      - name: odoo
+        image: "{{ _odoo_image }}:{{ _odoo_image_tag }}"
+        imagePullPolicy: Always
+        env:
+          - name: PGHOST
+            value: "{{ _odoo_postgresql_service_name }}"
+          - name: PGPORT
+            value: "{{ _odoo_postgresql_port }}"
+          - name: PGUSER
+            value: "{{ _odoo_postgresql_user }}"
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{_postgresql_name}}"
+                key: "database-password"
+          - name: DEFAULTDB
+            value: "{{ _odoo_postgresql_defaultdb }}"
+          - name: MODE
+            value: full
+          - name: MARABUNTA_ALLOW_SERIE
+            value: "{{ _odoo_marabunta_allow_serie }}"
+          - name: ODOO_ADMIN_PASSWD
+            valueFrom:
+              secretKeyRef:
+                name: "{{ _odoo_name }}"
+                key: "odoo-admin-passwd"
+          - name: ODOO_ADMIN_USER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{ _odoo_name }}"
+                key: "odoo-admin-user-password"
+          - name: ODOO_ADMIN_USER_TIMEZONE
+            value: {{ _odoo_admin_user_timezone }}
+          - name: RUNNING_ENV
+            value: {{ _odoo_environment }}
+          - name: ODOO_SMTP_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{ _odoo_name }}"
+                key: "odoo-smtp-password"
+          - name: ODOO_SMTP_PORT
+            value: "{{ _odoo_smtp_port }}"
+          - name: ODOO_SMTP_SERVER
+            value: "{{ _odoo_smtp_server }}"
+          - name: ODOO_SMTP_SSL
+            value: "{{ _odoo_smtp_ssl }}"
+          - name: ODOO_SMTP_USER
+            value: "{{ _odoo_smtp_user }}"
+        ports:
+        - name: tcp-odoo-http
+          containerPort: 8069
+        - name: tcp-odoo-im
+          containerPort: 8072
+        livenessProbe:
+          httpGet:
+            path: /monitoring/status
+            port: tcp-odoo-http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /monitoring/status
+            port: tcp-odoo-http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+        volumeMounts:
+        - name: odoo-data
+          mountPath: /odoo/data
+      volumes:
+      - name: odoo-data
+        persistentVolumeClaim:
+          claimName: "{{ _odoo_name }}-pvc"

@@ -15,7 +15,7 @@
   tasks:
   - name: Set up PostgreSQL
     include_role:
-      name: ./roles/postgresql-ocp
+      name: ./roles/postgresql
     vars:
       _postgresql_namespace: "{{ meta.namespace }}"
       _postgresql_name: "postgresql-{{ meta.name }}"
@@ -28,7 +28,7 @@
 
   - name: Set up Odoo
     include_role:
-      name: ./roles/odoo-ocp
+      name: ./roles/odoo
     vars:
       _odoo_namespace: "{{ meta.namespace }}"
       _odoo_name: "{{ odoo_service_name | default( meta.name ) }}"
