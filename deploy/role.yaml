@@ -67,7 +67,7 @@ rules:
   verbs:
   - get
 - apiGroups:
-  - odoo-comunity.com
+  - odoo-community.com
   resources:
   - '*'
   verbs:

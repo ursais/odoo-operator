@@ -1,9 +1,9 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: odoos.odoo-comunity.com
+  name: odoos.odoo-community.com
 spec:
-  group: odoo-comunity.com
+  group: odoo-community.com
   names:
     kind: Odoo
     listKind: OdooList
