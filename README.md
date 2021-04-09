@@ -2,8 +2,8 @@
 
 ## Table of Contents
 * [Deployment](#Deployment)
-  * [Create Custom Resource Definition](#Create_Custom_Resource_Definition)
-  * [Deploy Operator](#Deploy_Operator)
+  * [Create Custom Resource Definition](#Create-Custom-Resource-Definition)
+  * [Deploy Operator](#Deploy-Operator)
 * [Usage](#Usage)
 * [Support](#Support)
 
