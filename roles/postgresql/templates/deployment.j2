@@ -17,17 +17,19 @@ spec:
     spec:
       containers:
       - env:
-        - name: POSTGRESQL_USER
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
               key: database-user
               name: "{{ _postgresql_name }}"
-        - name: POSTGRESQL_PASSWORD
+        - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               key: database-password
               name: "{{ _postgresql_name }}"
-        - name: POSTGRESQL_DATABASE
+        - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
               key: database-name
@@ -70,7 +72,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /var/lib/pgsql/data
+        - mountPath: /var/lib/postgresql/data/pgdata
           name: postgresql-data
       dnsPolicy: ClusterFirst
       restartPolicy: Always
