@@ -16,8 +16,7 @@ spec:
       serviceAccountName: odoo-operator
       containers:
         - name: odoo-operator
-          # Replace this with the built image name
-          image: "REPLACE_IMAGE"
+          image: "docker.pkg.github.com/ursais/odoo-operator/odoo-operator:latest"
           imagePullPolicy: "Always"
           volumeMounts:
           - mountPath: /tmp/ansible-operator/runner

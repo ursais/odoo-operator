@@ -1,5 +1,5 @@
 ---
 - version: v1alpha1
-  group: odoo-comunity.com
+  group: odoo-community.com
   kind: Odoo
   playbook: playbook.yml
