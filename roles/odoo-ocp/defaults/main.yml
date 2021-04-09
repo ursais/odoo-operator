@@ -1,0 +1,27 @@
+---
+# defaults file for odoo-ocp
+_odoo_state: present
+_odoo_namespace: odoo
+_odoo_name: odoo
+
+_odoo_ssl: False
+_odoo_port: 3000
+_odoo_postgresql_database_name: postgresql
+_odoo_postgresql_port: 5432
+_odoo_postgresql_service_name: postgresql
+_odoo_postgresql_user: postgresql
+_odoo_postgresql_password: postgresql
+_odoo_volume_size: 1Gi
+_odoo_memory_request: 512Mi
+_odoo_memory_limit: 512Mi
+_odoo_cpu_request: 200m
+_odoo_cpu_limit: 500m
+_odoo_wait_for_init: true
+_odoo_image: ursa/odoo-14
+_odoo_image_tag: latest
+
+# Set to a valid route for the cluster to make a nicer route than svc-project.apps. Leave empty for default route
+_odoo_route: ""
+
+# Internal variable. Do not change
+_odoo_actual_route: ""

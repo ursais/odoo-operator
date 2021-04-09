@@ -1,0 +1,60 @@
+---
+# tasks file for Odoo
+- name: Set OpenShift Objects for Odoo to {{ _odoo_state }}
+  k8s:
+    state: "{{ _odoo_state }}"
+    merge_type:
+    - strategic-merge
+    - merge
+    definition: "{{ lookup('template', item ) | from_yaml }}"
+  loop:
+  - ./templates/service_account.j2
+  - ./templates/service.j2
+  - ./templates/route.j2
+  - ./templates/persistent_volume_claim.j2
+
+# Get Odoo Route
+- name: Get Odoo Route Hostname
+  when:
+  - _odoo_state == "present"
+  k8s_facts:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: "{{ _odoo_name }}"
+    namespace: "{{ _odoo_namespace }}"
+  register: r_route
+
+- name: Store Odoo Route Hostname
+  when:
+  - _odoo_state == "present"
+  set_fact:
+    _odoo_actual_route: "{{ r_route.resources[0].status.ingress[0].host }}"
+
+- name: Set Route dependant OpenShift Objects for Odoo to {{ _odoo_state }}
+  k8s:
+    state: "{{ _odoo_state }}"
+    merge_type:
+    - strategic-merge
+    - merge
+    definition: "{{ lookup('template', item ) | from_yaml }}"
+  loop:
+  - ./templates/config_map.j2
+  - ./templates/deployment.j2
+
+- name: Wait until application is available
+  when:
+    - _odoo_state == "present"
+    - _odoo_wait_for_init|bool
+  k8s_facts:
+    api_version: apps/v1
+    kind: Deployment
+    name: "{{ _odoo_name }}"
+    namespace: "{{ _odoo_namespace }}"
+  register: r_deployment
+  until:
+  - r_deployment.resources[0].status.availableReplicas is defined
+  - r_deployment.resources[0].status.availableReplicas == 1
+  retries: 50
+  delay: 10
+  ignore_errors: yes
+  

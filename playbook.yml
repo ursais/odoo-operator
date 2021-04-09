@@ -1,0 +1,43 @@
+---
+# Persistent Gitea deployment playbook.
+#
+# The Playbook expects the following variables to be set in the CR:
+# (Note that Camel case gets converted by the ansible-operator to Snake case)
+# - PostgresqlVolumeSize
+# - GiteaVolumeSize
+# - GiteaSSL
+# The following variables come from the ansible-operator
+# - meta.namespace
+# - meta.name (from the name of the CR)
+
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: Set up PostgreSQL
+    include_role:
+      name: ./roles/postgresql-ocp
+    vars:
+      _postgresql_namespace: "{{ meta.namespace }}"
+      _postgresql_name: "postgresql-{{ meta.name }}"
+      _postgresql_database_name: "odoodb"
+      _postgresql_user: "odoo"
+      _postgresql_password: "odoo"
+      _postgresql_volume_size: "{{ postgresql_volume_size|default('4Gi') }}"
+      _postgresql_image: "{{ postgresql_image | default('ursa/postgresql-13') }}"
+      _postgresql_image_tag: "{{ postgresql_image_tag|default('latest') }}"
+
+  - name: Set up Odoo
+    include_role:
+      name: ./roles/odoo-ocp
+    vars:
+      _odoo_namespace: "{{ meta.namespace }}"
+      _odoo_name: "{{ odoo_service_name | default( meta.name ) }}"
+      _odoo_ssl: "{{ odoo_ssl | default(False) | bool }}"
+      _odoo_route: "{{ odoo_route | default('') }}"
+      _odoo_image: "{{ odoo_image | default('ursa/odoo-14') }}"
+      _odoo_image_tag: "{{ odoo_image_tag | default('latest') }}"
+      _odoo_volume_size: "{{ odoo_volume_size | default('4Gi') }}"
+      _odoo_postgresql_service_name: "postgresql-{{ meta.name }}"
+      _odoo_postgresql_database_name: odoodb
+      _odoo_postgresql_user: odoo
+      _odoo_postgresql_password: odoo

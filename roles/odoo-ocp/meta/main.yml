@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Maxime Chambreuil
+  description: Role to set up Odoo on an OpenShift (Kubernetes) Cluster
+  company: Open Source Integrators
+  license: Apache
+  min_ansible_version: 2.6
+  galaxy_tags:
+    - openshift
+    - kubernetes
+    - k8s
+    - ansible-operator
+    - odoo
+    - git
+    - repository
+dependencies: []

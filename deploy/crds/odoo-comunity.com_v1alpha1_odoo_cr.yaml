@@ -1,0 +1,7 @@
+apiVersion: odoo-comunity.com/v1alpha1
+kind: Odoo
+metadata:
+  name: example-odoo
+spec:
+  # Add fields here
+  size: 3
