@@ -12,7 +12,7 @@
 
 Create the CRD:
 ```shell
-oc create -f ./deploy/crds/odoo-community.com_odoos_crd.yaml
+oc create -f ./deploy/crds/odoo-community.org_odoos_crd.yaml
 ```
 
 Create the cluster role:

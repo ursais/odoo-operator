@@ -1,4 +1,4 @@
-apiVersion: odoo-community.com/v1alpha1
+apiVersion: odoo-community.org/v1alpha1
 kind: Odoo
 metadata:
   name: example-odoo
