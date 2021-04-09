@@ -1,14 +1,14 @@
 # Odoo Operator
 
-# Table of Contents
+## Table of Contents
 * [Deployment](#Deployment)
-  * [Create Custom Resource Definition](#Create Custom Resource Definition)
-  * [Deploy Operator](#Deploy Operator)
+  * [Create Custom Resource Definition](#Create_Custom_Resource_Definition)
+  * [Deploy Operator](#Deploy_Operator)
 * [Usage](#Usage)
 * [Support](#Support)
 
-# Deployment
-## Create Custom Resource Definition
+## Deployment
+### Create Custom Resource Definition
 
 Create the CRD:
 ```shell
@@ -20,7 +20,7 @@ Create the cluster role:
 oc create -f ./deploy/cluster_role.yaml
 ```
 
-## Deploy Operator
+### Deploy Operator
 
 Operators can be deployed on a cluster-wide basis or on a namespace/project basis.
 
@@ -45,7 +45,7 @@ Create the deployment:
 oc create -f ./deploy/operator.yaml
 ```
 
-# Usage
+## Usage
 
 Create the Odoo instance:
 ```shell
@@ -62,7 +62,7 @@ Get the route of your Odoo instance:
 oc get route
 ```
 
-# Support
+## Support
 
 Report any problem or question by creating an issue on the
 [GitHub project](https://github.com/ursais/odoo-operator/issues).
