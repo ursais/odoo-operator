@@ -16,7 +16,6 @@ _odoo_memory_limit: 512Mi
 _odoo_memory_request: 512Mi
 _odoo_postgresql_database_name: odoodb
 _odoo_postgresql_defaultdb: postgres
-_odoo_postgresql_password: odoo
 _odoo_postgresql_port: 5432
 _odoo_postgresql_service_name: postgresql
 _odoo_postgresql_user: odoo

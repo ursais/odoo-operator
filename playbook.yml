@@ -35,5 +35,4 @@
       _odoo_postgresql_service_name: "postgresql-{{ meta.name }}"
       _odoo_postgresql_database_name: "odoodb"
       _odoo_postgresql_user: "odoo"
-      _odoo_postgresql_password: "odoo"
       _odoo_volume_size: "{{ odoo_volume_size | default('4Gi') }}"
