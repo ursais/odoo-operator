@@ -1,7 +1,7 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: odoo-http
+  name: "{{ _odoo_name }}"-http
   annotations:
     haproxy.router.openshift.io/timeout: 1800s
 spec:
@@ -15,19 +15,3 @@ spec:
   tls:
       termination: edge
       insecureEdgeTerminationPolicy: Redirect
----
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
-  name: odoo-im
-spec:
-  host: "{{ _odoo_route }}"
-  path: "/longpolling"
-  to:
-    kind: Service
-    name: "{{ _odoo_name }}"
-  port:
-    targetPort: im
-  tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
