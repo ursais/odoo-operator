@@ -2,6 +2,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: {{ _odoo_name }}-im
+  namespace: "{{ _odoo_namespace }}"
 spec:
   host: "{{ _odoo_route }}"
   path: "/longpolling"
