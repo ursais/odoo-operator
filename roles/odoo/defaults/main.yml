@@ -22,6 +22,7 @@ _odoo_postgresql_user: odoo
 _odoo_smtp_password: password
 _odoo_smtp_port: 25
 _odoo_smtp_server: false
+_odoo_smtp_ssl: false
 _odoo_smtp_user: false
 _odoo_volume_size: 1Gi
 _odoo_wait_for_init: true
