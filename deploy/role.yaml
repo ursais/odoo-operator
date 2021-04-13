@@ -10,11 +10,14 @@ rules:
   - pods
   - services
   - services/finalizers
+  - routes
   - endpoints
   - persistentvolumeclaims
   - events
   - configmaps
   - secrets
+  - cronjobs
+  - hpas
   verbs:
   - create
   - delete
