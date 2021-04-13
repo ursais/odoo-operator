@@ -59,7 +59,7 @@ spec:
           - name: ODOO_ADMIN_USER_TIMEZONE
             value: {{ _odoo_admin_user_timezone }}
           - name: RUNNING_ENV
-            value: {{ _odoo_environment }}
+            value: {{ _odoo_running_env }}
           - name: ODOO_SMTP_PASSWORD
             valueFrom:
               secretKeyRef:
