@@ -10,7 +10,7 @@
   - ./templates/secret.j2
 #  - ./templates/service_account.j2
   - ./templates/service.j2
-  - ./templates/route-http.j2
+  - ./templates/route.j2
   - ./templates/route-im.j2
   - ./templates/persistent_volume_claim.j2
 
