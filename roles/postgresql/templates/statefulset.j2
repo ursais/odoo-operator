@@ -33,7 +33,7 @@ spec:
             command:
               - /bin/sh
               - '-c'
-              - exec pg_isready -U {{_postgresql_user}} -d {{_postgresql_user}} -h 127.0.0.1
+              - exec pg_isready -U {{_postgresql_user}} -d {{_postgresql_database_name}} -h 127.0.0.1
           failureThreshold: 3
           initialDelaySeconds: 120
           periodSeconds: 10
@@ -49,7 +49,7 @@ spec:
               - /bin/sh
               - '-c'
               - '-e'
-              - exec pg_isready -U {{_postgresql_user}} -d {{_postgresql_user}} -h 127.0.0.1
+              - exec pg_isready -U {{_postgresql_user}} -d {{_postgresql_database_name}} -h 127.0.0.1
           failureThreshold: 3
           initialDelaySeconds: 5
           periodSeconds: 10
