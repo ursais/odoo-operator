@@ -22,11 +22,15 @@ rules:
   resources:
   - events
   - services/finalizers
+  - namespaces
+  - projects
+  - statuses
   verbs:
   - create
   - delete
   - get
-  - list- patch
+  - list
+  - patch
   - update
   - watch
 - apiGroups:

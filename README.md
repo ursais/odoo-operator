@@ -38,6 +38,7 @@ Create the role and role binding:
 ```shell
 oc create -f ./deploy/role.yaml
 oc create -f ./deploy/role_binding.yaml
+oc create -f ./deploy/cluster_role_binding.yaml
 ```
 
 Create the deployment:
