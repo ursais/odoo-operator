@@ -1,7 +1,7 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: {{ _odoo_name }}-http
+  name: {{ _odoo_name }}
   namespace: "{{ _odoo_namespace }}"
   annotations:
     haproxy.router.openshift.io/timeout: 1800s
