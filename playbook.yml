@@ -1,11 +1,6 @@
 ---
-# Persistent Gitea deployment playbook.
+# Persistent Odoo deployment playbook.
 #
-# The Playbook expects the following variables to be set in the CR:
-# (Note that Camel case gets converted by the ansible-operator to Snake case)
-# - PostgresqlVolumeSize
-# - GiteaVolumeSize
-# - GiteaSSL
 # The following variables come from the ansible-operator
 # - meta.namespace
 # - meta.name (from the name of the CR)
