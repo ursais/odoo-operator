@@ -1,6 +1,4 @@
 ---
-# tasks file for postgresql-ocp
-
 - name: Set OpenShift Objects for Postgresql to {{ _postgresql_state }}
   k8s:
     state: "{{ _postgresql_state }}"
