@@ -19,9 +19,9 @@ _odoo_postgresql_defaultdb: postgres
 _odoo_postgresql_port: 5432
 _odoo_postgresql_service_name: postgresql
 _odoo_postgresql_user: odoo
-_odoo_smtp_host: false
 _odoo_smtp_password: password
 _odoo_smtp_port: 25
+_odoo_smtp_server: false
 _odoo_smtp_user: false
 _odoo_volume_size: 1Gi
 _odoo_wait_for_init: true
