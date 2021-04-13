@@ -4,7 +4,9 @@ _odoo_namespace: odoo
 _odoo_name: odoo
 _odoo_running_env: production
 
+_odoo_admin_passwd: admin
 _odoo_admin_user_timezone: "America/Phoenix"
+_odoo_admin_user_password: admin
 _odoo_cpu_limit: 500m
 _odoo_cpu_request: 200m
 _odoo_image: ursa/odoo-14.0
