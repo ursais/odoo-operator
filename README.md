@@ -12,7 +12,7 @@
 
 Create the CRD:
 ```shell
-oc create -f ./deploy/crds/odoo-community.org_odoos_crd.yaml
+oc create -f ./deploy/custom_resource_definition.yaml
 ```
 
 Create the cluster role:
@@ -38,6 +38,7 @@ Create the role and role binding:
 ```shell
 oc create -f ./deploy/role.yaml
 oc create -f ./deploy/role_binding.yaml
+oc create -f ./deploy/cluster_role_binding.yaml
 ```
 
 Create the deployment:
@@ -49,7 +50,7 @@ oc create -f ./deploy/operator.yaml
 
 Create the Odoo instance:
 ```shell
-oc create -f deploy/odoo.yaml
+oc create -f deploy/custom_resource.yaml
 ```
 
 Examine the custom resource:

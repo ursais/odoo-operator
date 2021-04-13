@@ -1,8 +1,0 @@
-apiVersion: odoo-community.org/v1alpha1
-kind: Odoo
-metadata:
-  name: example
-spec:
-  postgresqlVolumeSize: 4Gi
-  odooVolumeSize: 4Gi
-  odooSsl: True

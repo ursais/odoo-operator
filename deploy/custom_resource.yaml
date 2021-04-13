@@ -1,7 +1,7 @@
 apiVersion: odoo-community.org/v1alpha1
 kind: Odoo
 metadata:
-  name: example-odoo
+  name: example
 spec:
-  # Add fields here
-  size: 3
+  postgresqlVolumeSize: 4Gi
+  odooVolumeSize: 4Gi
