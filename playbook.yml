@@ -30,8 +30,8 @@
       _odoo_route: "{{ odoo_route | default('') }}"
       _odoo_image: "{{ odoo_image | default('ursa/odoo-14.0') }}"
       _odoo_image_tag: "{{ odoo_image_tag | default('latest') }}"
-      _odoo_admin_passwd: "{{ lookup('odoo_admin_passwd', '/dev/null length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
-      _odoo_admin_user_password: "{{ lookup('odoo_admin_user_password', '/dev/null length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
+      _odoo_admin_passwd: "{{ odoo_admin_passwd | default('admin') }}"
+      _odoo_admin_user_password: "{{ odoo_admin_user_password | default('admin') }}"
       _odoo_postgresql_service_name: "postgresql-{{ meta.name }}"
       _odoo_postgresql_database_name: odoodb
       _odoo_postgresql_user: odoo
