@@ -38,7 +38,7 @@ spec:
           - name: PGPASSWORD
             valueFrom:
               secretKeyRef:
-                name: "{{_postgresql_name}}"
+                name: "postgresql-{{ meta.name }}"
                 key: "database-password"
           - name: DEFAULTDB
             value: "{{ _odoo_postgresql_defaultdb }}"

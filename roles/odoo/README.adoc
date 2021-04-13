@@ -17,7 +17,6 @@ This role also requires a PostgreSQL Database to be running in the same OpenShif
 |_odoo_postgresql_service_name|postgresql|Yes|Name of the PostgreSQL service to connect (should be listening on port 5432)
 |_odoo_postgresql_database_name|postgresql|Yes|Name of Database connect to
 |_odoo_postgresql_user|postgresql|Yes|Database User Name
-|_odoo_postgresql_password|postgresql|Yes|Database Password
 |_odoo_volume_size|1Gi|No|Size of Persistent Volume to be created
 |_odoo_memory_request|512Mi|No|Minimum Memory Requirement
 |_odoo_memory_limit|512Mi|No|Maximum Memory Requirement
@@ -65,7 +64,6 @@ This role also requires a PostgreSQL Database to be running in the same OpenShif
       _odoo_postgresql_service_name: "postgresql-odoo"
       _odoo_postgresql_database_name: odoodb
       _odoo_postgresql_user: odoo
-      _odoo_postgresql_password: odoo
 ----
 
 == License
