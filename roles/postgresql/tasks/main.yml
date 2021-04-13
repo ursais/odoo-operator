@@ -20,7 +20,7 @@
     - _postgresql_wait_for_init|bool
   k8s_facts:
     api_version: apps/v1
-    kind: Deployment
+    kind: StatefulSet
     name: "{{ _postgresql_name }}"
     namespace: "{{ _postgresql_namespace }}"
   register: r_deployment
