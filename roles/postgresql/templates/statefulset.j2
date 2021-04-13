@@ -17,28 +17,23 @@ spec:
       - env:
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_DB
+          value: "{{_postgresql_database_name}}"
         - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: "{{ _postgresql_name }}"
-              key: database-user
+          value: "{{_postgresql_user}}"
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: "{{ _postgresql_name }}"
               key: database-password
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: "{{ _postgresql_name }}"
-              key: database-name
         image: "{{ _postgresql_image }}:{{ _postgresql_image_tag }}"
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
             command:
-            - /usr/libexec/check-container
-            - --live
+              - /bin/sh
+              - '-c'
+              - exec pg_isready -U {{_postgresql_user}} -d {{_postgresql_user}} -h 127.0.0.1
           failureThreshold: 3
           initialDelaySeconds: 120
           periodSeconds: 10
@@ -51,7 +46,10 @@ spec:
         readinessProbe:
           exec:
             command:
-            - /usr/libexec/check-container
+              - /bin/sh
+              - '-c'
+              - '-e'
+              - exec pg_isready -U {{_postgresql_user}} -d {{_postgresql_user}} -h 127.0.0.1
           failureThreshold: 3
           initialDelaySeconds: 5
           periodSeconds: 10
