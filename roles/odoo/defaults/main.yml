@@ -4,8 +4,6 @@ _odoo_namespace: odoo
 _odoo_name: odoo
 _odoo_running_env: production
 
-_odoo_admin_passwd: "admin"
-_odoo_admin_user_password: "admin"
 _odoo_admin_user_timezone: "America/Phoenix"
 _odoo_cpu_limit: 500m
 _odoo_cpu_request: 200m
@@ -21,13 +19,11 @@ _odoo_postgresql_port: 5432
 _odoo_postgresql_service_name: postgresql
 _odoo_postgresql_user: odoo
 _odoo_smtp_host:
-_odoo_smtp_password:
+_odoo_smtp_password: password
 _odoo_smtp_port: 25
 _odoo_smtp_user:
 _odoo_volume_size: 1Gi
 _odoo_wait_for_init: true
-
-
 
 # Set to a valid route for the cluster to make a nicer route than svc-project.apps. Leave empty for default route
 _odoo_route: ""
