@@ -1,5 +1,12 @@
 ---
-# tasks file for Odoo
+- name: Generate Odoo admin_passwd
+    password: "{{ lookup('odoo_admin_passwd', '/tmp/odoo_admin_passwd length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
+  register: _odoo_admin_passwd
+
+- name: Generate Odoo admin_user_password
+    password: "{{ lookup('odoo_admin_user_password', '/tmp/odoo_admin_user_password length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
+  register: _odoo_admin_user_password
+
 - name: Set OpenShift Objects for Odoo to {{ _odoo_state }}
   k8s:
     state: "{{ _odoo_state }}"
@@ -57,4 +64,13 @@
   retries: 50
   delay: 10
   ignore_errors: yes
-  
+
+- name: Cleanup Odoo admin_passwd
+  file:
+    path: /tmp/odoo_admin_passwd
+    state: absent
+
+- name: Cleanup Odoo admin_user_password
+  file:
+    path: /tmp/odoo_admin_user_password
+    state: absent
