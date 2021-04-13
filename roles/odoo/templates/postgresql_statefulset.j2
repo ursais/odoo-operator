@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "{{ _postgresql_name }}"
+  namespace: "{{ _odoo_namespace }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "{{ _postgresql_name }}"
+  template:
+    metadata:
+      labels:
+        name: "{{ _postgresql_name }}"
+    spec:
+      containers:
+      - env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_DB
+          value: "{{_postgresql_database_name}}"
+        - name: POSTGRES_USER
+          value: "{{_postgresql_user}}"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "{{ _postgresql_name }}"
+              key: database-password
+        image: "{{ _postgresql_image }}:{{ _postgresql_image_tag }}"
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - '-c'
+              - exec pg_isready -U {{_postgresql_user}} -d template1 -h 127.0.0.1
+          failureThreshold: 3
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: postgresql
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - '-c'
+              - '-e'
+              - exec pg_isready -U {{_postgresql_user}} -d template1 -h 127.0.0.1
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: "{{ _postgresql_cpu_request }}"
+            memory: "{{ _postgresql_memory_request }}"
+          limits:
+            cpu: "{{ _postgresql_cpu_limit }}"
+            memory: "{{ _postgresql_memory_limit }}"
+        securityContext:
+          capabilities: {}
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgresql-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: postgresql-data
+        persistentVolumeClaim:
+          claimName: "{{ _postgresql_name }}-pvc"

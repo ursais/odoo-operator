@@ -1,0 +1,18 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: "{{ _odoo_name }}"
+  namespace: "{{ _odoo_namespace }}"
+  annotations:
+    haproxy.router.openshift.io/timeout: 1800s
+spec:
+  host: "{{ _odoo_route }}"
+  path: "/"
+  to:
+    kind: Service
+    name: "{{ _odoo_name }}"
+  port:
+    targetPort: http
+  tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect

@@ -1,66 +1,52 @@
 # Odoo Operator
 
 ## Table of Contents
-* [Deployment](#Deployment)
-  * [Create Custom Resource Definition](#Create-Custom-Resource-Definition)
-  * [Deploy Operator](#Deploy-Operator)
+* [Prerequisites](#Prerequisites)
+* [Build the operator](#Build-the-operator)
+* [Build the bundle](#Build-the-bundle)
 * [Usage](#Usage)
 * [Support](#Support)
 
-## Deployment
-### Create Custom Resource Definition
+## Prerequisites
 
-Create the CRD:
+* Go through the [installation guide](https://sdk.operatorframework.io/docs/building-operators/ansible/installation).
+* User authorized with `cluster-admin` permissions.
+
+## Build the operator
+
+Build and push the operator:
 ```shell
-oc create -f ./deploy/custom_resource_definition.yaml
+export VERSION=0.0.2
+export OPERATOR_IMG="docker.io/ursa/odoo-operator:latest"
+make docker-build docker-push IMG=$OPERATOR_IMG
 ```
 
-Create the cluster role:
+## Build the bundle
+
+Bundle your operator and push the bundle image:
 ```shell
-oc create -f ./deploy/cluster_role.yaml
-```
-
-### Deploy Operator
-
-Operators can be deployed on a cluster-wide basis or on a namespace/project basis.
-
-Create the project:
-```shell
-oc new-project odoo-operator --display-name="Odoo"
-```
-
-Create the service account:
-```shell
-oc create -f ./deploy/service_account.yaml
-```
-
-Create the role and role binding:
-```shell
-oc create -f ./deploy/role.yaml
-oc create -f ./deploy/role_binding.yaml
-oc create -f ./deploy/cluster_role_binding.yaml
-```
-
-Create the deployment:
-```shell
-oc create -f ./deploy/operator.yaml
+make bundle IMG=$OPERATOR_IMG
+export BUNDLE_IMG="docker.io/ursa/odoo-operator-bundle:latest"
+make bundle-build BUNDLE_IMG=$BUNDLE_IMG
+make docker-push IMG=$BUNDLE_IMG
 ```
 
 ## Usage
 
-Create the Odoo instance:
+Run your bundle:
 ```shell
-oc create -f deploy/custom_resource.yaml
+export BUNDLE_IMG="docker.io/ursa/odoo-operator-bundle:latest"
+operator-sdk run bundle $BUNDLE_IMG
 ```
 
-Examine the custom resource:
+Create a sample Odoo custom resource:
 ```shell
-oc describe odoo example
+$ kubectl apply -f config/samples/apps_v1alpha1_odoo.yaml
 ```
 
-Get the route of your Odoo instance:
+Uninstall the operator:
 ```shell
-oc get route
+operator-sdk cleanup odoo-operator
 ```
 
 ## Support

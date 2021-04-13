@@ -1,1 +1,5 @@
 /.idea
+/bin
+/bundle
+/bundle.Dockerfile
+/cache

@@ -1,0 +1,9 @@
+apiVersion: apps.odoo-community.org/v1alpha1
+kind: Odoo
+metadata:
+  name: odoo
+  annotations:
+    "ansible.sdk.operatorframework.io/verbosity": "2"
+spec:
+  postgresqlVolumeSize: 1Gi
+  odooVolumeSize: 1Gi

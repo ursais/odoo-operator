@@ -1,0 +1,9 @@
+---
+_odoo_namespace: "{{ ansible_operator_meta.namespace }}"
+_odoo_name: "{{ ansible_operator_meta.name | default('odoo') }}"
+_odoo_route: "{{ odoo_route | default('') }}"
+# echo admin | base64 -> YWRtaW4K
+_odoo_admin_passwd: "{{ odoo_admin_passwd | default('YWRtaW4K') }}"
+_odoo_admin_user_password: "{{ odoo_admin_user_password | default('YWRtaW4K') }}"
+_odoo_volume_size: "{{ odoo_volume_size | default('1Gi') }}"
+_postgresql_volume_size: "{{ postgresql_volume_size | default('1Gi') }}"
