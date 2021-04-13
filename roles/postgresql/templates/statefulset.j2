@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: "{{ _postgresql_name }}"
   namespace: "{{ _postgresql_namespace }}"
@@ -8,8 +8,6 @@ spec:
   selector:
     matchLabels:
       name: "{{ _postgresql_name }}"
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -22,18 +20,18 @@ spec:
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              key: database-user
               name: "{{ _postgresql_name }}"
+              key: database-user
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              key: database-password
               name: "{{ _postgresql_name }}"
+              key: database-password
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
-              key: database-name
               name: "{{ _postgresql_name }}"
+              key: database-name
         image: "{{ _postgresql_image }}:{{ _postgresql_image_tag }}"
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -72,7 +70,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data/pgdata
+        - mountPath: /var/lib/postgresql/data
           name: postgresql-data
       dnsPolicy: ClusterFirst
       restartPolicy: Always

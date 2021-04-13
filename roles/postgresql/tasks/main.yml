@@ -12,7 +12,7 @@
   - ./templates/secret.j2
   - ./templates/service.j2
   - ./templates/persistent_volume_claim.j2
-  - ./templates/deployment.j2
+  - ./templates/statefulset.j2
 
 - name: Wait until application is available
   when:
