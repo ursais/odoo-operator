@@ -7,7 +7,7 @@
     - merge
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
-#  - ./templates/secret.j2
+  - ./templates/secret.j2
   - ./templates/service_account.j2
   - ./templates/service.j2
   - ./templates/route.j2
