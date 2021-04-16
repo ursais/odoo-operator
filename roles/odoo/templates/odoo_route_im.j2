@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: "{{ _odoo_name }}-im"
+  namespace: "{{ _odoo_namespace }}"
+spec:
+  # host: "{{ _odoo_actual_route }}"
+  path: "/longpolling"
+  to:
+    kind: Service
+    name: "{{ _odoo_name }}"
+  port:
+    targetPort: im
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

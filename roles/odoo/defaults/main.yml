@@ -1,24 +1,25 @@
 ---
 _odoo_state: present
-_odoo_namespace: odoo
 _odoo_name: odoo
 _odoo_running_env: production
 
-_odoo_admin_passwd: admin
+# echo admin | base64 -> YWRtaW4K
+_odoo_admin_passwd: YWRtaW4K
+_odoo_admin_user_password: YWRtaW4K
 _odoo_admin_user_timezone: "America/Phoenix"
-_odoo_admin_user_password: admin
 _odoo_cpu_limit: 500m
 _odoo_cpu_request: 200m
-_odoo_image: ursa/odoo-14.0
-_odoo_image_tag: latest
+_odoo_image: ursa/odoo-template-14.0
+_odoo_image_tag: 0.0.1
 _odoo_marabunta_allow_serie: true
 _odoo_memory_limit: 512Mi
 _odoo_memory_request: 512Mi
-_odoo_postgresql_database_name: odoodb
+_odoo_postgresql_database_name: "MASTER"
 _odoo_postgresql_defaultdb: postgres
 _odoo_postgresql_port: 5432
 _odoo_postgresql_service_name: postgresql
 _odoo_postgresql_user: odoo
+_odoo_server_wide_modules: web,monitoring_status
 _odoo_smtp_password: password
 _odoo_smtp_port: 25
 _odoo_smtp_server: false
@@ -30,5 +31,19 @@ _odoo_wait_for_init: true
 # Set to a valid route for the cluster to make a nicer route than svc-project.apps. Leave empty for default route
 _odoo_route: ""
 
-# Internal variable. Do not change
-_odoo_actual_route: ""
+# defaults file for postgresql
+_postgresql_state: present
+_postgresql_name: postgresql
+
+_postgresql_database_name: "MASTER"
+_postgresql_user: odoo
+_postgresql_password: odoo
+_postgresql_volume_size: 1Gi
+_postgresql_memory_request: 512Mi
+_postgresql_memory_limit: 512Mi
+_postgresql_cpu_request: 200m
+_postgresql_cpu_limit: 500m
+
+_postgresql_wait_for_init: true
+_postgresql_image: ursa/postgresql-13.0
+_postgresql_image_tag: latest

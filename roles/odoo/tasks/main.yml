@@ -1,4 +1,33 @@
 ---
+- name: Set OpenShift Objects for PostgreSQL to {{ _postgresql_state }}
+  k8s:
+    state: "{{ _postgresql_state }}"
+    merge_type:
+    - strategic-merge
+    - merge
+    definition: "{{ lookup('template', item ) | from_yaml }}"
+  loop:
+  - ./templates/postgresql_secret.j2
+  - ./templates/postgresql_service.j2
+  - ./templates/postgresql_persistent_volume_claim.j2
+  - ./templates/postgresql_statefulset.j2
+
+- name: Wait until PostgreSQL is ready
+  when:
+    - _postgresql_state == "present"
+    - _postgresql_wait_for_init|bool
+  k8s_info:
+    api_version: apps/v1
+    kind: StatefulSet
+    name: "{{ _postgresql_name }}"
+    namespace: "{{ _odoo_namespace }}"
+  register: r_deployment
+  until:
+  - r_deployment.resources[0].status.readyReplicas is defined
+  - r_deployment.resources[0].status.readyReplicas == 1
+  retries: 50
+  delay: 10
+
 - name: Set OpenShift Objects for Odoo to {{ _odoo_state }}
   k8s:
     state: "{{ _odoo_state }}"
@@ -7,18 +36,16 @@
     - merge
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
-  - ./templates/secret.j2
-#  - ./templates/service_account.j2
-  - ./templates/service.j2
-  - ./templates/route.j2
-  - ./templates/route-im.j2
-  - ./templates/persistent_volume_claim.j2
+  - ./templates/odoo_secret.j2
+  - ./templates/odoo_service.j2
+  - ./templates/odoo_route.j2
+  - ./templates/odoo_persistent_volume_claim.j2
 
 # Get Odoo Route
 - name: Get Odoo Route Hostname
   when:
   - _odoo_state == "present"
-  k8s_facts:
+  k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: "{{ _odoo_name }}"
@@ -29,7 +56,22 @@
   when:
   - _odoo_state == "present"
   set_fact:
-    _odoo_actual_route: "{{ r_route.resources[0].status.ingress[0].host }}"
+    _odoo_actual_route: "{{ _odoo_namespace }}.{{ r_route.resources[0].status.ingress[0].routerCanonicalHostname }}"
+
+#- name: Reset the Odoo Route Hostname
+#  k8s:
+#    state: "{{ _odoo_state }}"
+#    merge_type:
+#    - strategic-merge
+#    - merge
+#    definition:
+#      apiVersion: v1
+#      kind: Route
+#      metadata:
+#        name: "{{ _odoo_name }}"
+#        namespace: "{{ _odoo_namespace }}"
+#      spec:
+#        host: "{{ _odoo_actual_route }}"
 
 - name: Set Route dependant OpenShift Objects for Odoo to {{ _odoo_state }}
   k8s:
@@ -39,13 +81,14 @@
     - merge
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
-  - ./templates/deployment_config.j2
+  - ./templates/odoo_route_im.j2
+  - ./templates/odoo_deployment_config.j2
 
-- name: Wait until application is available
+- name: Wait until Odoo is available
   when:
     - _odoo_state == "present"
     - _odoo_wait_for_init|bool
-  k8s_facts:
+  k8s_info:
     api_version: apps/v1
     kind: Deployment
     name: "{{ _odoo_name }}"
