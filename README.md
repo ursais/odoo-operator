@@ -1,3 +1,5 @@
+[![Docker Repository on Quay](https://quay.io/repository/ursais/odoo-operator/status "Docker Repository on Quay")](https://quay.io/repository/ursais/odoo-operator)
+
 # Odoo Operator
 
 ## Table of Contents
@@ -16,7 +18,7 @@
 
 Build and push the operator:
 ```shell
-export VERSION=0.0.2
+export VERSION=latest
 export OPERATOR_IMG="docker.io/ursa/odoo-operator:latest"
 make docker-build docker-push IMG=$OPERATOR_IMG
 ```
