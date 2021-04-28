@@ -6,4 +6,5 @@ metadata:
     "ansible.sdk.operatorframework.io/verbosity": "2"
 spec:
   postgresqlVolumeSize: 1Gi
+  odooStorageClass: nfs
   odooVolumeSize: 1Gi

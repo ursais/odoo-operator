@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: "{{ _postgresql_name }}"
+  name: "{{ _odoo_name }}-postgresql"
   namespace: "{{ _odoo_namespace }}"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: "{{ _postgresql_name }}"
+      name: "{{ _odoo_name }}-postgresql"
   template:
     metadata:
       labels:
-        name: "{{ _postgresql_name }}"
+        name: "{{ _odoo_name }}-postgresql"
     spec:
       containers:
       - env:
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
         - name: POSTGRES_DB
-          value: "{{_postgresql_database_name}}"
+          value: "{{ _postgresql_database_name }}"
         - name: POSTGRES_USER
-          value: "{{_postgresql_user}}"
+          value: "{{ _postgresql_user }}"
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: "{{ _postgresql_name }}"
+              name: "{{ _odoo_name }}-postgresql"
               key: database-password
         image: "{{ _postgresql_image }}:{{ _postgresql_image_tag }}"
         imagePullPolicy: IfNotPresent
@@ -33,15 +33,15 @@ spec:
             command:
               - /bin/sh
               - '-c'
-              - exec pg_isready -U {{_postgresql_user}} -d template1 -h 127.0.0.1
+              - exec pg_isready -U {{ _postgresql_user }} -d template1 -h 127.0.0.1
           failureThreshold: 3
           initialDelaySeconds: 120
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 10
-        name: postgresql
+        name: "{{ _odoo_name }}-postgresql"
         ports:
-        - containerPort: 5432
+        - containerPort: {{ _odoo_postgresql_port }}
           protocol: TCP
         readinessProbe:
           exec:
@@ -78,4 +78,4 @@ spec:
       volumes:
       - name: postgresql-data
         persistentVolumeClaim:
-          claimName: "{{ _postgresql_name }}-pvc"
+          claimName: "{{ _odoo_name }}-postgresql-pvc"

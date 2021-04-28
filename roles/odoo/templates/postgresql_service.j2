@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{_postgresql_name}}"
+  name: "{{ _odoo_name }}-postgresql"
   namespace: "{{ _odoo_namespace }}"
 spec:
   ports:
-  - name: postgresql
-    port: 5432
+  - name: "{{ _odoo_name }}-postgresql"
+    port: {{ _odoo_postgresql_port }}
     protocol: TCP
-    targetPort: 5432
+    targetPort: {{ _odoo_postgresql_port }}
   selector:
-    name: "{{ _postgresql_name }}"
+    name: "{{ _odoo_name }}-postgresql"
   sessionAffinity: None
   type: ClusterIP

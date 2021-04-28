@@ -19,7 +19,7 @@
   k8s_info:
     api_version: apps/v1
     kind: StatefulSet
-    name: "{{ _postgresql_name }}"
+    name: "{{ _odoo_name }}-postgresql"
     namespace: "{{ _odoo_namespace }}"
   register: r_deployment
   until:
@@ -91,7 +91,7 @@
   k8s_info:
     api_version: apps/v1
     kind: Deployment
-    name: "{{ _odoo_name }}"
+    name: "{{ _odoo_name }}-odoo"
     namespace: "{{ _odoo_namespace }}"
   register: r_deployment
   until:

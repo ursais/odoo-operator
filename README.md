@@ -18,7 +18,7 @@
 
 Build and push the operator:
 ```shell
-export VERSION=latest
+export VERSION=0.0.2
 export OPERATOR_IMG="docker.io/ursa/odoo-operator:$VERSION"
 make docker-build docker-push IMG=$OPERATOR_IMG
 ```
