@@ -3,14 +3,15 @@ _odoo_state: present
 _odoo_name: odoo
 _odoo_running_env: production
 
-# echo admin | base64 -> YWRtaW4K
-_odoo_admin_passwd: YWRtaW4K
-_odoo_admin_user_password: YWRtaW4K
+# echo -n "admin" | base64 -> YWRtaW4=
+_odoo_admin_passwd: YWRtaW4=
+_odoo_admin_user_password: YWRtaW4=
 _odoo_admin_user_timezone: "America/Phoenix"
 _odoo_cpu_limit: 500m
 _odoo_cpu_request: 200m
 _odoo_image: ursa/odoo-template-14.0
-_odoo_image_tag: 0.0.1
+_odoo_image_tag: 0.0.2
+_odoo_marabunta_mode: base
 _odoo_marabunta_allow_serie: true
 _odoo_memory_limit: 512Mi
 _odoo_memory_request: 512Mi
@@ -20,11 +21,12 @@ _odoo_postgresql_port: 5432
 _odoo_postgresql_service_name: postgresql
 _odoo_postgresql_user: odoo
 _odoo_server_wide_modules: web,monitoring_status
-_odoo_smtp_password: password
+_odoo_smtp_password: YWRtaW4=
 _odoo_smtp_port: 25
 _odoo_smtp_server: false
 _odoo_smtp_ssl: false
 _odoo_smtp_user: false
+_odoo_storage_class: nfs
 _odoo_volume_size: 1Gi
 _odoo_wait_for_init: true
 

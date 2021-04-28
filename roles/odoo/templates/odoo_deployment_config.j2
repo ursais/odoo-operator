@@ -1,7 +1,7 @@
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
-  name: "{{ _odoo_name }}"
+  name: "{{ _odoo_name }}-odoo"
   namespace: "{{ _odoo_namespace }}"
   annotations:
     description: Defines how to deploy the application server
@@ -15,14 +15,14 @@ spec:
   minReadySeconds: 120
   selector:
     name: "{{ _odoo_name }}"
-    app: "{{ _odoo_name }}"
+    app: "{{ _odoo_name }}-odoo"
     release: "{{ _odoo_name }}"
   template:
     metadata:
       name: "{{ _odoo_name }}"
       labels:
         name: "{{ _odoo_name }}"
-        app: "{{ _odoo_name }}"
+        app: "{{ _odoo_name }}-odoo"
         release: "{{ _odoo_name }}"
     spec:
       containers:
@@ -43,8 +43,8 @@ spec:
                 key: "database-password"
           - name: DEFAULTDB
             value: "{{ _odoo_postgresql_defaultdb }}"
-          - name: MODE
-            value: full
+          - name: MARABUNTA_MODE
+            value: "{{ _odoo_marabunta_mode }}"
           - name: MARABUNTA_ALLOW_SERIE
             value: "{{ _odoo_marabunta_allow_serie }}"
           - name: ODOO_ADMIN_PASSWD
@@ -110,4 +110,4 @@ spec:
       volumes:
       - name: odoo-data
         persistentVolumeClaim:
-          claimName: "{{ _odoo_name }}-pvc"
+          claimName: "{{ _odoo_name }}-odoo-pvc"

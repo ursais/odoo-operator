@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: docker.io/ursa/odoo-operator
-  newTag: latest
+  newTag: 0.0.2

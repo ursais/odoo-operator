@@ -1,11 +1,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "{{ _odoo_name }}-pvc"
+  name: "{{ _odoo_name }}-odoo-pvc"
   namespace: "{{ _odoo_namespace }}"
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
+  storageClassName: "{{ _odoo_storage_class }}"
   resources:
     requests:
       storage: "{{ _odoo_volume_size }}"
