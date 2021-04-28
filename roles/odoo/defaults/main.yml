@@ -18,7 +18,6 @@ _odoo_memory_request: 512Mi
 _odoo_postgresql_database_name: "MASTER"
 _odoo_postgresql_defaultdb: postgres
 _odoo_postgresql_port: 5432
-_odoo_postgresql_service_name: postgresql
 _odoo_postgresql_user: odoo
 _odoo_server_wide_modules: web,monitoring_status
 _odoo_smtp_password: YWRtaW4=

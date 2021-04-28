@@ -31,7 +31,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
           - name: PGHOST
-            value: "{{ _odoo_postgresql_service_name }}"
+            value: "{{ _odoo_name }}-postgresql"
           - name: PGPORT
             value: "{{ _odoo_postgresql_port }}"
           - name: PGUSER
