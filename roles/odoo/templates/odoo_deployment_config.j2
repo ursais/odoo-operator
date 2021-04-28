@@ -31,7 +31,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
           - name: PGHOST
-            value: "{{ _odoo_postgresql_service_name }}"
+            value: "{{ _odoo_name }}-postgresql"
           - name: PGPORT
             value: "{{ _odoo_postgresql_port }}"
           - name: PGUSER
@@ -39,7 +39,7 @@ spec:
           - name: PGPASSWORD
             valueFrom:
               secretKeyRef:
-                name: "{{ _postgresql_name }}"
+                name: "{{ _odoo_name }}-postgresql"
                 key: "database-password"
           - name: DEFAULTDB
             value: "{{ _odoo_postgresql_defaultdb }}"
@@ -50,12 +50,12 @@ spec:
           - name: ODOO_ADMIN_PASSWD
             valueFrom:
               secretKeyRef:
-                name: "{{ _odoo_name }}"
+                name: "{{ _odoo_name }}-odoo"
                 key: "odoo-admin-passwd"
           - name: ODOO_ADMIN_USER_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: "{{ _odoo_name }}"
+                name: "{{ _odoo_name }}-odoo"
                 key: "odoo-admin-user-password"
           - name: ODOO_ADMIN_USER_TIMEZONE
             value: {{ _odoo_admin_user_timezone }}
@@ -66,7 +66,7 @@ spec:
           - name: ODOO_SMTP_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: "{{ _odoo_name }}"
+                name: "{{ _odoo_name }}-odoo"
                 key: "odoo-smtp-password"
           - name: ODOO_SMTP_PORT
             value: "{{ _odoo_smtp_port }}"
